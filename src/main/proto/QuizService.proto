@@ -1,0 +1,45 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.rikkeisoft.quiz;
+option java_package = "com.rikkeisoft.quiz";
+
+
+message QuizId {
+  string id = 1;
+}
+
+message Quiz {
+  string id = 1;
+  string question = 2;
+  repeated Choice choices = 3;
+  int32 answer = 4;
+  int32 difficulty = 5;
+  int64 userId = 6;
+}
+
+message Choice {
+  int32 index = 1;
+  string choice = 2;
+}
+
+message Quizzes {
+  repeated Quiz quizzes = 1;
+}
+
+message UserId {
+  int64 userId = 1;
+}
+
+message DeleteOutput {
+  string quizId = 1;
+  int64 userId = 2;
+  bool isSuccess = 3;
+}
+
+service QuizService {
+  rpc createQuiz(Quiz) returns (Quiz);
+  rpc getDetailQuiz(QuizId) returns (Quiz);
+  rpc getQuizListByUser(UserId) returns (Quizzes);
+  rpc updateQuiz(Quiz) returns (Quiz);
+  rpc deleteQuiz(Quiz) returns (DeleteOutput);
+}
